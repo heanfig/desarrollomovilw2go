@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "343477444532",
+    "firebase_url": "https://appxilio-98d49.firebaseio.com",
+    "project_id": "appxilio-98d49",
+    "storage_bucket": "appxilio-98d49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343477444532:android:78616ad641fd6b59",
+        "android_client_info": {
+          "package_name": "appxilio.zopp.com.proyectoappxilio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343477444532-d1klarvh4lmlpqikloqr4nplrtnvjll6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFyStqwLLXtAFDXxRef8KGl1VDlDHKQME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343477444532:android:dcb18edb2da459f9",
+        "android_client_info": {
+          "package_name": "com.zopp.appxilio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343477444532-d1klarvh4lmlpqikloqr4nplrtnvjll6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFyStqwLLXtAFDXxRef8KGl1VDlDHKQME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

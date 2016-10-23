@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.dz.notas.DashboardActivity"
+    tools:showIn="@layout/activity_dashboard">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:id="@+id/card_viewgps"
+            card_view:cardBackgroundColor="@color/btn_logut_bg"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="20dp"
+                android:layout_marginTop="15dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+                <ImageView
+                    android:layout_width="188dp"
+                    android:layout_height="127dp"
+                    android:src="@drawable/maps_icon"
+                    android:id="@+id/imageView3"
+                    android:layout_weight="0.91" />
+
+                <TextView
+                    android:layout_width="131dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:gravity="left"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="Ubicación no encontrada"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:id="@+id/card_viewusers"
+            card_view:cardBackgroundColor="@color/bg_main"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="20dp"
+                android:layout_marginTop="15dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="188dp"
+                    android:layout_height="127dp"
+                    android:src="@drawable/png_roulette"
+                    android:id="@+id/imageView"
+                    android:layout_weight="0.91" />
+
+                <TextView
+                    android:layout_width="131dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:gravity="left"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="0 amigos en la plataforma"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:id="@+id/card_viewconfig"
+            card_view:cardBackgroundColor="@color/bg_main"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="20dp"
+                android:layout_marginTop="15dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+                <TextView
+                    android:layout_width="131dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:gravity="left"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="Configura tu Appxilio y avisa"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:layout_width="188dp"
+                    android:layout_height="127dp"
+                    android:src="@drawable/cogs_icon"
+                    android:id="@+id/imageView2"
+                    android:layout_weight="0.91" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:id="@+id/card_sesionkill"
+            card_view:cardBackgroundColor="@color/bg_main"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="20dp"
+                android:layout_marginTop="15dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+                <TextView
+                    android:layout_width="131dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:gravity="left"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="Cierra Sesión"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:layout_width="188dp"
+                    android:layout_height="127dp"
+                    android:src="@drawable/close"
+                    android:id="@+id/imageView4"
+                    android:layout_weight="0.91" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+
+</android.support.v4.widget.NestedScrollView>
