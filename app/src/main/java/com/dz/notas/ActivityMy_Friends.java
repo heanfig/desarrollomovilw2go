@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.dz.notas.Adapters.RecyclerViewAdapter;
-import com.zopp.appxilio.R;
 import com.dz.notas.models.User;
 
 import java.util.ArrayList;

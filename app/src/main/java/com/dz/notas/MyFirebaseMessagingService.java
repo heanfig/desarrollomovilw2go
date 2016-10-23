@@ -12,7 +12,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
-import com.zopp.appxilio.R;
 
 /**
  * Created by herman on 11/09/2016.

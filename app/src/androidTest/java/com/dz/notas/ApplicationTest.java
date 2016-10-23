@@ -1,4 +1,4 @@
-package com.zopp.appxilio;
+package com.dz.notas;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
