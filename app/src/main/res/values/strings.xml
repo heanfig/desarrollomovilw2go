@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Appxilio</string>
+    <string name="app_name">NotasApp</string>
     <string name="action_sign_in_short">Registro</string>
     <string name="email">Email</string>
     <string name="minimum_password">Contraseña corta, mínimo 6 caracteres!</string>
@@ -192,14 +192,17 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="slide_1_title">¿Estás en problemas?</string>
+    <string name="slide_0_title">¿Necesitas Agregar una nota</string>
+    <string name="slide_0_subtitle">de tu última llamada.?</string>
+
+    <string name="slide_1_title">Cuando recibas una llamada</string>
     <string name="slide_1_subtitle">Utiliza tu móvil.</string>
 
-    <string name="slide_2_title">Utilza Appxilio</string>
-    <string name="slide_2_subtitle">Con un solo botón puedes alertar a tus amigos</string>
+    <string name="slide_2_title">Se visualizara una alerta</string>
+    <string name="slide_2_subtitle">podras seleccionarla </string>
 
-    <string name="slide_3_title">Tus amigos iran al rescate</string>
-    <string name="slide_3_subtitle">Les llegará una alerta a sus moviles</string>
+    <string name="slide_3_title">Agrega recordatorios de tus llamadas</string>
+    <string name="slide_3_subtitle">Podras tener tu información siempre que la necesites</string>
 
 <!-- <string name="slide_3_download_and_go_subtitle" >On the bus, in a train, wherever you are - the books are there too.</string>
     <string name="slide_4_different_languages_subtitle">English, Zulu, Afrikaans, Xhosa and more!</string>-->

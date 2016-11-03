@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
 
         final String PREFS_NAME = "MyPrefsFile";
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        if (settings.getBoolean("first_run", true)) {
+        //if (settings.getBoolean("first_run", true)) {
             loadTutorial();
-            settings.edit().putBoolean("first_run", false).commit();
-        }
+          //  settings.edit().putBoolean("first_run", false).commit();
+        //}
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -64,16 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-            }
-        });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +125,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
+
+        TutorialItem tutorialItem0 = new TutorialItem(R.string.slide_0_title, R.string.slide_0_subtitle,
+                R.color.slide_1, R.drawable.tut_page_2_front,  R.drawable.tut_page_2_background);
+
         TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_title, R.string.slide_1_subtitle,
                 R.color.slide_1, R.drawable.frontal_2_larga,  R.drawable.tut_page_3_background);
 
@@ -148,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                 R.color.slide_4,  R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);*/
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem0);
         tutorialItems.add(tutorialItem1);
         tutorialItems.add(tutorialItem2);
         tutorialItems.add(tutorialItem3);
