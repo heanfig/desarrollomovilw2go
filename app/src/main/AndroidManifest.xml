@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
         android:allowBackup="true"
@@ -72,8 +72,8 @@
             </intent-filter>
         </service>
 
-        <!--This part is inside the application-->
-        <receiver android:name=".services.CallReceiver" >
+        <!-- This part is inside the application -->
+        <receiver android:name=".services.CallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
@@ -88,7 +88,8 @@
         <activity
             android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".NoteDetail"></activity>
+        <activity android:name=".NoteDetail" />
+        <activity android:name=".ListContacts"></activity>
     </application>
 
 </manifest>

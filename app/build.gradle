@@ -33,7 +33,6 @@ dependencies {
     compile 'com.google.firebase:firebase-database:9.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'za.co.riggaroo:materialhelptutorial:1.+'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }
 
 apply plugin: 'com.google.gms.google-services'

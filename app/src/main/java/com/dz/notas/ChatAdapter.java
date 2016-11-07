@@ -68,7 +68,6 @@ public class ChatAdapter extends BaseAdapter {
         holder.txtMessage.setText(chatMessage.getMessage());
         holder.txtInfo.setText(chatMessage.getDate());
 
-
         return convertView;
     }
 
