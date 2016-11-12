@@ -2,10 +2,13 @@ package com.dz.notas.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -61,7 +64,12 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     }
 
     private void sendNotification(String messageBody,String number) {
+
         Log.e("NOTIFICATION",messageBody);
+        Log.e("NOTIFICATION",number);
+        Log.e("NOTIFICATION",getContactName(number,mContext));
+
+        String n = getContactName(number,mContext);
 
         Intent intent = new Intent(mContext, NoteDetail.class);
 
@@ -75,7 +83,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_info_black_24dp)
-                .setContentTitle("¿Agregar Nota a " + number + "?")
+                .setContentTitle(n)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -88,5 +96,36 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 
+    }
+    public static String getContactName(String phoneNumber,Context context)
+    {
+        Cursor cursor;
+
+        try{
+            ContentResolver cr = context.getContentResolver();
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+            cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        }catch (NullPointerException e){
+            cursor = null;
+        }
+
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = "";
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+            }
+        }
+        if(cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+
+        if(contactName == ""){
+            contactName = "Agrega este número a contactos";
+        }
+
+        return contactName;
     }
 }

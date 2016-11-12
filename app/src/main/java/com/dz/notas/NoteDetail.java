@@ -1,5 +1,6 @@
 package com.dz.notas;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -79,6 +80,9 @@ public class NoteDetail extends AppCompatActivity {
                 chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
                 chatMessage.setMe(true);
 
+                ConnectionDB db = new ConnectionDB(getApplicationContext());
+                db.addNote("s", messageText);
+
                 messageET.setText("");
 
                 displayMessage(chatMessage);
@@ -102,7 +106,7 @@ public class NoteDetail extends AppCompatActivity {
 
         chatHistory = new ArrayList<ChatMessage>();
 
-        ChatMessage msg = new ChatMessage();
+        /*ChatMessage msg = new ChatMessage();
         msg.setId(1);
         msg.setMe(false);
         msg.setMessage("Bienvenido a Notas");
@@ -112,8 +116,21 @@ public class NoteDetail extends AppCompatActivity {
         msg1.setId(2);
         msg1.setMe(false);
         msg1.setMessage("Estamos en desarrollo beta agrega una ntoa");
-        msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-        chatHistory.add(msg1);
+        msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));*/
+
+        ConnectionDB db = new ConnectionDB(getApplicationContext());
+        Cursor cursor = db.getNotes();
+
+        if (cursor.moveToFirst()) {
+            do {
+                ChatMessage msg = new ChatMessage();
+                msg.setId(cursor.getInt(0));
+                msg.setMe(false);
+                msg.setMessage(cursor.getString(2));
+                msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+                chatHistory.add(msg);
+            } while (cursor.moveToNext());
+        }
 
         adapter = new ChatAdapter(NoteDetail.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
