@@ -30,7 +30,9 @@
     <string name="forgot_password_msg">Te enviaremos un correo electrónico para cambiar la contraseña.</string>
     <string name="title_activity_settings">Configuracion</string>
     <string name="content_user_add">Agrega un usuario a appxilio, escribe el correo electrónico y se agregará a tu circulo</string>
+    <string name="content_user_add2">Para que peudas agregar notas Agrega este usuario a contactos</string>
     <string name="content_user_add_btn">AGREGAR USUARIO</string>
+    <string name="add_contact">AGREGAR USUARIO A CONTACTOS</string>
     <string name="button_limit_users">Conseguir más Usuarios</string>
     <string name="hint_phone">Nombre (Opcional)</string>
     <string name="button_limit_users_limit">Has superado el limite de usuarios gratuitos, Consigue más utilizando el botón de pagar</string>

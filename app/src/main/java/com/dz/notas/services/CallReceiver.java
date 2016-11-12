@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.dz.notas.AddContactItem;
 import com.dz.notas.DashboardActivity;
 import com.dz.notas.NoteDetail;
 import com.dz.notas.R;
@@ -70,11 +71,13 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         Log.e("NOTIFICATION",getContactName(number,mContext));
 
         String n = getContactName(number,mContext);
-
-        Intent intent = new Intent(mContext, NoteDetail.class);
-
-        //String uri = "geo:" + 5.050183401112501 + "," + -75.48343253627934 + "?q=" + 5.050183401112501 + "," + -75.48343253627934;
-        // intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+        String title = n == "EMPTY" ? "Agrega este número a contactos" : n;
+        Intent intent;
+        if(n == "EMPTY"){
+            intent = new Intent(mContext, AddContactItem.class);
+        }else{
+            intent = new Intent(mContext, NoteDetail.class);
+        }
 
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0 /* Request code */, intent,
@@ -83,7 +86,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_info_black_24dp)
-                .setContentTitle(n)
+                .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -123,7 +126,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         }
 
         if(contactName == ""){
-            contactName = "Agrega este número a contactos";
+            contactName = "EMPTY";
         }
 
         return contactName;

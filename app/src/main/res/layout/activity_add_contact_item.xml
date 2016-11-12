@@ -23,44 +23,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/content_user_add"
+            android:text="@string/content_user_add2"
             android:textColor="@android:color/white"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center" />
 
         <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/email_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/btn_add_user"
+                android:id="@+id/btn_add_contact"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:background="@color/colorAccent"
-                android:text="@string/content_user_add_btn"
+                android:text="@string/add_contact"
                 android:textColor="@android:color/black" />
 
-    </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/back_tolist"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:background="@color/colorAccent"
+                android:text="@string/btn_back"
+                android:textColor="@android:color/black" />
 
-        <ProgressBar
-            android:id="@+id/progressBar_user"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone" />
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 </RelativeLayout>

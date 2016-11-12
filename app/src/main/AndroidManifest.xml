@@ -30,10 +30,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -66,11 +62,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".services.LockService">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </service>
 
         <!-- This part is inside the application -->
         <receiver android:name=".services.CallReceiver">
@@ -82,14 +73,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".adduser" />
-        <activity android:name=".ActivityMy_Friends" />
-        <activity android:name=".limitUsers" />
         <activity
             android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".NoteDetail" />
-        <activity android:name=".ListContacts"></activity>
+        <activity android:name=".ListContacts" />
+        <activity android:name=".AddContactItem"></activity>
     </application>
 
 </manifest>
