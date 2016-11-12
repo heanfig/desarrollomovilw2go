@@ -29,7 +29,7 @@ public class AddContactItem extends AppCompatActivity {
             }
         });
 
-        backbtn = (Button)findViewById(R.id.btn_add_contact);
+        backbtn = (Button)findViewById(R.id.back_tolist);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

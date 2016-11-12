@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.dz.notas.models.User;
-import com.dz.notas.services.LockService;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -44,7 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        startService(new Intent(getApplicationContext(), LockService.class));
+        //startService(new Intent(getApplicationContext(), LockService.class));
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.e("ALERTA", refreshedToken);
@@ -84,63 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                 });
 
-
-        /*String refreshedTokena = FirebaseInstanceId.getInstance().getToken();
-        Toast.makeText(getApplication(),"",Toast.LENGTH_LONG);
-        Log.e("ALERTA", refreshedTokena);
-        Log.e("ALERTA", "Hermannn");
-        */
-
-
-        //if (getIntent().getExtras() != null) {
-           // for (String key : getIntent().getExtras().keySet()) {
-                //String value = getIntent().getExtras().getString(key);
-          //      Toast.makeText(getApplicationContext(),"Demo",Toast.LENGTH_LONG).show();
-                //Log.d("demo", "Key: " + key + " Value: " + value);
-           // }
-        //}
-        //if (getIntent().hasExtra("message")) {
-        //    Toast.makeText(getApplicationContext(),"Demo",Toast.LENGTH_LONG).show();
-            //String theMessage = intent.getStringExtra("message");
-            //do something
-        //}
-
-        /*
-          * @name: @FIREBASE: Suscribe to topic beause notifications
-          * @edit: @heanfig
-          * @descpiption: @FIREBASE: Suscribe to topic beause notifications
-        */
         FirebaseMessaging.getInstance().subscribeToTopic("noticias");
-
-        /*
-          * @name: float button of header activity
-          * @edit: @heanfig
-          * @descpiption: float button of header activity
-        */
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent t = new Intent(getApplication(), adduser.class);
-                startActivity(t);
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        /*
-          * @name: Alert when the gps is off
-          * @edit: @heanfig
-          * @descpiption: Alert when the gps is off
-        */
-        cv_friends = (CardView)findViewById(R.id.card_viewusers);
-        cv_friends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent Preferences = new Intent(getApplication(),ActivityMy_Friends.class);
-                startActivity(Preferences);
-            }
-        });
 
         /*
           * @name: Alert when the gps is off
