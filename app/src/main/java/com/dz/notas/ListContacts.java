@@ -19,6 +19,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dz.notas.Adapters.ContactAdapter;
+import com.dz.notas.models.Contact;
+
 import java.util.ArrayList;
 
 public class ListContacts extends AppCompatActivity {
@@ -26,7 +29,7 @@ public class ListContacts extends AppCompatActivity {
     private ListView mListView;
     private ProgressDialog pDialog;
     private Handler updateBarHandler;
-    ArrayList<String> contactList;
+    ArrayList<Contact> contactList;
     Cursor cursor;
     int counter;
 
@@ -45,7 +48,7 @@ public class ListContacts extends AppCompatActivity {
         // Since reading contacts takes more time, let's run it on a separate thread.
 
         if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
-            Toast.makeText(getApplicationContext(), "Es una invoacion del metodo bsucar", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Es una invoacion del metodo bsucar", Toast.LENGTH_LONG).show();
         }else {
             new Thread(new Runnable() {
                 @Override
@@ -105,7 +108,7 @@ public class ListContacts extends AppCompatActivity {
     }
 
     public void getContacts(boolean isQuery,String query) {
-        contactList = new ArrayList<String>();
+        contactList = new ArrayList<Contact>();
         String phoneNumber = null;
         String email = null;
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
@@ -125,6 +128,7 @@ public class ListContacts extends AppCompatActivity {
         if (cursor.getCount() > 0) {
             counter = 0;
             while (cursor.moveToNext()) {
+                Contact c = new Contact();
                 output = new StringBuffer();
                 // Update the progress message
                 updateBarHandler.post(new Runnable() {
@@ -139,15 +143,18 @@ public class ListContacts extends AppCompatActivity {
 
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
                 if (hasPhoneNumber > 0) {
-                        output.append("\n Nombre:" + name);
-                        output.append("\n Teléfono:" + number);
+                    c.setID(contact_id);
+                    c.setName(name);
+                    c.setPhone(number);
+                    //output.append("\n Nombre:" + name);
+                    //output.append("\n Teléfono:" + number);
                 }
                 if(isQuery){
-                    if(name.contains(query) || number.contains(query)){
-                        contactList.add(output.toString());
+                    if(name.toLowerCase().contains(query.toLowerCase()) || number.contains(query.toLowerCase())){
+                        contactList.add(c);
                     }
                 }else{
-                    contactList.add(output.toString());
+                    contactList.add(c);
                 }
 
             }
@@ -155,7 +162,8 @@ public class ListContacts extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.contact_list_item, R.id.text1, contactList);
+                    ContactAdapter adapter = new ContactAdapter(getApplicationContext(),contactList);
+                    //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.contact_list_item, R.id.text1, contactList);
                     mListView.setAdapter(adapter);
                 }
             });
