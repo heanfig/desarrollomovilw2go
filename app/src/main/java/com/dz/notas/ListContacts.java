@@ -1,6 +1,7 @@
 package com.dz.notas;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,8 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +29,7 @@ public class ListContacts extends AppCompatActivity {
     ArrayList<String> contactList;
     Cursor cursor;
     int counter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,26 +40,71 @@ public class ListContacts extends AppCompatActivity {
         pDialog.show();
         mListView = (ListView) findViewById(R.id.list);
         updateBarHandler =new Handler();
-        // Since reading contacts takes more time, let's run it on a separate thread.
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getContacts();
-            }
-        }).start();
 
+        handleIntent(getIntent());
+        // Since reading contacts takes more time, let's run it on a separate thread.
+
+        if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+            Toast.makeText(getApplicationContext(), "Es una invoacion del metodo bsucar", Toast.LENGTH_LONG).show();
+        }else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pDialog.cancel();
+                    getContacts(false, "");
+                }
+            }).start();
+        }
         // Set onclicklistener to the list item.
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Toast.makeText(getApplicationContext(), "item clicked : \n" + contactList.get(position), Toast.LENGTH_SHORT).show();
-                Intent t = new Intent(getApplication(),NoteDetail.class);
+                Intent t = new Intent(getApplication(), NoteDetail.class);
                 startActivity(t);
             }
         });
+
     }
-    public void getContacts() {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            return onSearchRequested();
+        }else if(id == R.id.action_settings){
+            Intent t = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(t);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            doSearch(query);
+        }
+    }
+
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void doSearch(String queryStr) {
+        Toast.makeText(getApplicationContext(), queryStr, Toast.LENGTH_LONG).show();
+        getContacts(true,queryStr);
+    }
+
+    public void getContacts(boolean isQuery,String query) {
         contactList = new ArrayList<String>();
         String phoneNumber = null;
         String email = null;
@@ -88,13 +137,19 @@ public class ListContacts extends AppCompatActivity {
                 String name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
                 String number = cursor.getString(cursor.getColumnIndex(NUMBER));
 
-                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
+                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
                 if (hasPhoneNumber > 0) {
-                    output.append("\n Nombre:" + name);
-                    output.append("\n Teléfono:" + number);
+                        output.append("\n Nombre:" + name);
+                        output.append("\n Teléfono:" + number);
                 }
-                // Add the contact to the ArrayList
-                contactList.add(output.toString());
+                if(isQuery){
+                    if(name.contains(query) || number.contains(query)){
+                        contactList.add(output.toString());
+                    }
+                }else{
+                    contactList.add(output.toString());
+                }
+
             }
             // ListView has to be updated using a ui thread
             runOnUiThread(new Runnable() {

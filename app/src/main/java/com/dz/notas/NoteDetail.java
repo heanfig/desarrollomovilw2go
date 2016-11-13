@@ -1,5 +1,6 @@
 package com.dz.notas;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class NoteDetail extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+        getMenuInflater().inflate(R.menu.menu_chat_detail, menu);
         return true;
     }
 
@@ -48,7 +50,10 @@ public class NoteDetail extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent t = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(t);
+        }else if(id == R.id.empty_chat){
+            Toast.makeText(getApplicationContext(),"Vaciar Chat",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
