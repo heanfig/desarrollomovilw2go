@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -76,7 +79,7 @@ public class NoteDetail extends AppCompatActivity {
         c.setPhone(value_phone);
         c.setName(value_name);
 
-        Log.e("PHONE",value_id);
+        Log.e("PHONE", value_id);
 
     }
     @Override
@@ -84,6 +87,16 @@ public class NoteDetail extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_chat_detail, menu);
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_chat_detail, menu);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        long itemID = info.position;
+        menu.setHeaderTitle(c.getName());
     }
 
     @Override
@@ -188,7 +201,9 @@ public class NoteDetail extends AppCompatActivity {
         }
 
         adapter = new ChatAdapter(NoteDetail.this, new ArrayList<ChatMessage>());
+
         messagesContainer.setAdapter(adapter);
+        registerForContextMenu(messagesContainer);
 
         for(int i=0; i<chatHistory.size(); i++) {
             ChatMessage message = chatHistory.get(i);
