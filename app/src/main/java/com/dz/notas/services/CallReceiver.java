@@ -16,6 +16,7 @@ import com.dz.notas.AddContactItem;
 import com.dz.notas.DashboardActivity;
 import com.dz.notas.NoteDetail;
 import com.dz.notas.R;
+import com.dz.notas.models.Contact;
 
 import java.util.Date;
 
@@ -66,17 +67,22 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
 
     private void sendNotification(String messageBody,String number) {
 
-        Log.e("NOTIFICATION",messageBody);
-        Log.e("NOTIFICATION",number);
-        Log.e("NOTIFICATION",getContactName(number,mContext));
+        //Log.e("NOTIFICATION",messageBody);
+        //Log.e("NOTIFICATION",number);
+        // Log.e("NOTIFICATION",getContactName(number,mContext));
 
-        String n = getContactName(number,mContext);
-        String title = n == "EMPTY" ? "Agrega este número a contactos" : n;
+        Contact n = getContactName(number,mContext);
+        String title = n.getName() == "EMPTY" ? "Agrega este número a contactos" : n.getName();
+        //Log.e("PHONE",n.getID());
+
         Intent intent;
-        if(n == "EMPTY"){
+        if(n.getName() == "EMPTY"){
             intent = new Intent(mContext, AddContactItem.class);
         }else{
             intent = new Intent(mContext, NoteDetail.class);
+            intent.putExtra("contact_id",n.getID());
+            intent.putExtra("value_phone",n.getPhone());
+            intent.putExtra("value_name",n.getName());
         }
 
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -100,14 +106,15 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 
     }
-    public static String getContactName(String phoneNumber,Context context)
+    public static Contact getContactName(String phoneNumber,Context context)
     {
         Cursor cursor;
+        Contact c = new Contact();
 
         try{
             ContentResolver cr = context.getContentResolver();
             Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-            cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+            cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME,ContactsContract.PhoneLookup._ID}, null, null, null);
         }catch (NullPointerException e){
             cursor = null;
         }
@@ -115,20 +122,37 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         if (cursor == null) {
             return null;
         }
+
         String contactName = "";
+        String contactId = "";
+        String phoneValue = "";
+
         if(cursor != null) {
             if (cursor.moveToFirst()) {
-                contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                //Log.e("PHONE",contactId);
+
+                phoneValue = phoneNumber;
+
+                if(contactName == ""){
+                    contactName = "EMPTY";
+                }
+
+                c.setID(contactId);
+                c.setName(contactName);
+                c.setPhone(phoneValue);
             }
+        }else{
+                c.setID("EMPTY");
+                c.setName("EMPTY");
+                c.setPhone("EMPTY");
         }
+
         if(cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
 
-        if(contactName == ""){
-            contactName = "EMPTY";
-        }
-
-        return contactName;
+        return c;
     }
 }

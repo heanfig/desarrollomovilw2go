@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dz.notas.Adapters.ContactAdapter;
@@ -48,8 +49,11 @@ public class ListContacts extends AppCompatActivity {
         // Since reading contacts takes more time, let's run it on a separate thread.
 
         if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+            String query = getIntent().getStringExtra(SearchManager.QUERY);
+            getSupportActionBar().setTitle("Búsqueda de '" + query + "'");
             //Toast.makeText(getApplicationContext(), "Es una invoacion del metodo bsucar", Toast.LENGTH_LONG).show();
         }else {
+            getSupportActionBar().setTitle("Mis Contactos");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -63,9 +67,23 @@ public class ListContacts extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(), "item clicked : \n" + contactList.get(position), Toast.LENGTH_SHORT).show();
-                Intent t = new Intent(getApplication(), NoteDetail.class);
-                startActivity(t);
+            //Toast.makeText(getApplicationContext(), "item clicked : \n" + contactList.get(position), Toast.LENGTH_SHORT).show();
+
+            TextView contact_id_input = (TextView)view.findViewById(R.id.text1);
+            String contact_id = contact_id_input.getText().toString();
+
+            TextView value_id_input = (TextView)view.findViewById(R.id.text3);
+            String value_id = value_id_input.getText().toString();
+
+            TextView name_input = (TextView)view.findViewById(R.id.hiddent);
+            String name = name_input.getText().toString();
+
+            Intent t = new Intent(getApplication(), NoteDetail.class);
+                    t.putExtra("contact_id",contact_id);
+                    t.putExtra("value_phone",value_id);
+                    t.putExtra("value_name",name);
+
+            startActivity(t);
             }
         });
 
@@ -85,6 +103,9 @@ public class ListContacts extends AppCompatActivity {
             return onSearchRequested();
         }else if(id == R.id.action_settings){
             Intent t = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(t);
+        }else if(id == R.id.view_all){
+            Intent t = new Intent(getApplicationContext(),ListContacts.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);
@@ -112,7 +133,9 @@ public class ListContacts extends AppCompatActivity {
         String phoneNumber = null;
         String email = null;
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-        String _ID = ContactsContract.Contacts._ID;
+        //String _ID = ContactsContract.Contacts._ID;
+        //String _ID = ContactsContract.PhoneLookup._ID;
+        String _ID = ContactsContract.Data.CONTACT_ID;
         String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
         String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
         Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -137,9 +160,9 @@ public class ListContacts extends AppCompatActivity {
                     }
                 });
 
-                String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
-                String name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                String number = cursor.getString(cursor.getColumnIndex(NUMBER));
+                String contact_id = cursor.getString(cursor.getColumnIndexOrThrow(_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DISPLAY_NAME));
+                String number = cursor.getString(cursor.getColumnIndexOrThrow(NUMBER));
 
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
                 if (hasPhoneNumber > 0) {

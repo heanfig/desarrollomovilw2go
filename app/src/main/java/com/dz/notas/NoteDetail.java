@@ -2,9 +2,11 @@ package com.dz.notas;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dz.notas.models.Contact;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -26,14 +30,55 @@ public class NoteDetail extends AppCompatActivity {
     private Button sendBtn;
     private ChatAdapter adapter;
     private ArrayList<ChatMessage> chatHistory;
+    private Contact c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
+
+        Bundle extras = getIntent().getExtras();
+
+        String value_id = "";
+        String value_phone = "";
+        String value_name = "";
+
+        if (extras != null) {
+            value_id = extras.getString("contact_id");
+            value_phone = extras.getString("value_phone");
+            value_name = extras.getString("value_name");
+        }
+
+        c = new Contact();
+            c.setID(value_id);
+            c.setPhone(value_phone);
+            c.setName(value_name);
+
+        Log.e("PHONE",value_id);
+
         initControls();
     }
 
+    @Override
+    public void onNewIntent(Intent intent){
+        Bundle extras = intent.getExtras();
+        String value_id = "";
+        String value_phone = "";
+        String value_name = "";
+        if (extras != null) {
+            value_id = extras.getString("contact_id");
+            value_phone = extras.getString("value_phone");
+            value_name = extras.getString("value_name");
+        }
+
+        c = new Contact();
+        c.setID(value_id);
+        c.setPhone(value_phone);
+        c.setName(value_name);
+
+        Log.e("PHONE",value_id);
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -67,9 +112,9 @@ public class NoteDetail extends AppCompatActivity {
         TextView meLabel = (TextView) findViewById(R.id.meLbl);
         TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        companionLabel.setText("My Buddy");
+        companionLabel.setText(this.c.getName());
 
-        loadDummyHistory();
+        loadDummyHistory(this.c.getID());
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,14 +124,19 @@ public class NoteDetail extends AppCompatActivity {
                     return;
                 }
 
+                String contact_id = c.getID();
+                String datetime = DateFormat.getDateTimeInstance().format(new Date());
+                String Message = messageText;
+                String phonename = c.getName();
+
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setId(122);//dummy
                 chatMessage.setMessage(messageText);
-                chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+                chatMessage.setDate(datetime);
                 chatMessage.setMe(true);
 
                 ConnectionDB db = new ConnectionDB(getApplicationContext());
-                db.addNote("s", messageText);
+                db.addNote("Notas de " + phonename, messageText, contact_id, datetime);
 
                 messageET.setText("");
 
@@ -107,7 +157,7 @@ public class NoteDetail extends AppCompatActivity {
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
 
-    private void loadDummyHistory(){
+    private void loadDummyHistory(String idnote){
 
         chatHistory = new ArrayList<ChatMessage>();
 
@@ -124,7 +174,7 @@ public class NoteDetail extends AppCompatActivity {
         msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));*/
 
         ConnectionDB db = new ConnectionDB(getApplicationContext());
-        Cursor cursor = db.getNotes();
+        Cursor cursor = db.getNotes(idnote);
 
         if (cursor.moveToFirst()) {
             do {
