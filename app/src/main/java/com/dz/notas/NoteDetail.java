@@ -93,10 +93,27 @@ public class NoteDetail extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_chat_detail, menu);
+        inflater.inflate(R.menu.menu_context_item, menu);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         long itemID = info.position;
         menu.setHeaderTitle(c.getName());
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        long selectid = menuinfo.id;
+        int selectpos = menuinfo.position;
+
+        switch (item.getItemId()) {
+            case R.id.editnote:
+                Toast.makeText(getApplicationContext(),"No se pudo abrir la nota",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.deletenote:
+                Toast.makeText(getApplicationContext(),"No se pudo borrar la nota",Toast.LENGTH_LONG).show();
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override

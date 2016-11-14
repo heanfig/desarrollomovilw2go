@@ -211,8 +211,8 @@
     <!-- <string name="slide_3_download_and_go_subtitle" >On the bus, in a train, wherever you are - the books are there too.</string>
     <string name="slide_4_different_languages_subtitle">English, Zulu, Afrikaans, Xhosa and more!</string>-->
 
-    <string name="tutorial_done">FIN</string>
-
+    <string name="editNoteDetail">Editar Nota</string>
+    <string name="deleteNoteDetail">Eliminar Nota</string>
 
     <string name="add_users_card_title">0 Usuarios</string>
 </resources>
