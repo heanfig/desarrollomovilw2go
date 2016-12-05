@@ -1,5 +1,6 @@
 package com.dz.notas.services;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -10,14 +11,18 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 import android.util.Log;
 
 import com.dz.notas.AddContactItem;
+import com.dz.notas.ChatMessage;
+import com.dz.notas.ConnectionDB;
 import com.dz.notas.DashboardActivity;
 import com.dz.notas.NoteDetail;
 import com.dz.notas.R;
 import com.dz.notas.models.Contact;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -81,6 +86,34 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
             intent.putExtra("value_name",n.getName());
         }
 
+        CharSequence boldUsernameMessage = null;
+
+        if(n.getName() != "EMPTY") {
+            String bufferData = "";
+            int counter = 0;
+
+            ConnectionDB db = new ConnectionDB(mContext);
+            Cursor cursor = db.getNotes(n.getID());
+            if (cursor != null && cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        if(counter <= 4){
+                            bufferData += "<b>" + n.getName() +"</b>: " + cursor.getString(2) + "<br>";
+                        }
+                        counter++;
+                    } while (cursor.moveToNext());
+                }
+            }
+
+            boldUsernameMessage = Html.fromHtml(bufferData);
+        }else{
+            boldUsernameMessage = Html.fromHtml(messageBody);
+            //boldUsernameMessage = Html.fromHtml("<b>@" + "Herman" + "</b> " + "texto<br><b>s</b>:sdadasdasdsadas");
+        }
+
+
+
+
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -89,10 +122,21 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_info_black_24dp)
                 .setContentTitle(title)
-                .setContentText(messageBody)
+                .setContentText(boldUsernameMessage)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(boldUsernameMessage));
+
+        if(n.getName() == "EMPTY"){
+            notificationBuilder.addAction(R.drawable.ic_notifications_black_24dp,
+                    "Agregar", pendingIntent);
+        }else{
+            notificationBuilder.addAction(R.drawable.ic_notifications_black_24dp,
+                    "Ver Chats", pendingIntent);
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
