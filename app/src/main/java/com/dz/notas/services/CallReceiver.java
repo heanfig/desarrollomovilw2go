@@ -31,30 +31,35 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     @Override
     protected void onIncomingCallReceived(Context ctx, String number, Date start) {
         mContext = ctx;
+        Log.e("PHONE","inicio llamada");
         sendNotification("Recibiste una llamada de " + number,number);
     }
 
     @Override
     protected void onIncomingCallAnswered(Context ctx, String number, Date start) {
         mContext = ctx;
+        Log.e("PHONE","inicio llamada");
         sendNotification("Respondiste la llamada de " + number,number);
     }
 
     @Override
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end) {
         mContext = ctx;
+        Log.e("PHONE","inicio llamada");
         sendNotification("Finalizo Tu llamada de " + number,number);
     }
 
     @Override
     protected void onOutgoingCallStarted(Context ctx, String number, Date start) {
         mContext = ctx;
-        sendNotification("Inicio la llamada de " + number,number);
+        Log.e("PHONE","inicio llamada");
+        sendNotification("Inicio la llamada de " + number, number);
     }
 
     @Override
     protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end) {
         mContext = ctx;
+        Log.e("PHONE","inicio llamada");
         sendNotification("Finalizó la llamada de " + number,number);
     }
 
@@ -69,7 +74,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
 
         //Log.e("NOTIFICATION",messageBody);
         //Log.e("NOTIFICATION",number);
-        // Log.e("NOTIFICATION",getContactName(number,mContext));
+       //  Log.e("NOTIFICATION",getContactName(number,mContext).getName());
 
         Contact n = getContactName(number,mContext);
         String title = n.getName() == "EMPTY" ? "Agrega este número a contactos" : n.getName();
@@ -117,10 +122,6 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
             cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME,ContactsContract.PhoneLookup._ID}, null, null, null);
         }catch (NullPointerException e){
             cursor = null;
-        }
-
-        if (cursor == null) {
-            return null;
         }
 
         String contactName = "";
