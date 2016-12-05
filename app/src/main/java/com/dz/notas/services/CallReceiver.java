@@ -38,15 +38,11 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     @Override
     protected void onIncomingCallAnswered(Context ctx, String number, Date start) {
         mContext = ctx;
-        Log.e("PHONE","inicio llamada");
-        sendNotification("Respondiste la llamada de " + number,number);
     }
 
     @Override
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end) {
         mContext = ctx;
-        Log.e("PHONE","inicio llamada");
-        sendNotification("Finalizo Tu llamada de " + number,number);
     }
 
     @Override
@@ -59,8 +55,6 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     @Override
     protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end) {
         mContext = ctx;
-        Log.e("PHONE","inicio llamada");
-        sendNotification("Finalizó la llamada de " + number,number);
     }
 
     @Override
@@ -72,13 +66,10 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
 
     private void sendNotification(String messageBody,String number) {
 
-        //Log.e("NOTIFICATION",messageBody);
-        //Log.e("NOTIFICATION",number);
-       //  Log.e("NOTIFICATION",getContactName(number,mContext).getName());
+        Log.e("NOTIFICATION",messageBody);
 
         Contact n = getContactName(number,mContext);
         String title = n.getName() == "EMPTY" ? "Agrega este número a contactos" : n.getName();
-        //Log.e("PHONE",n.getID());
 
         Intent intent;
         if(n.getName() == "EMPTY"){
@@ -113,6 +104,8 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     }
     public static Contact getContactName(String phoneNumber,Context context)
     {
+        Log.e("NOTIFICATION","::" + "begin of activity" + "::");
+
         Cursor cursor;
         Contact c = new Contact();
 
@@ -128,11 +121,13 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         String contactId = "";
         String phoneValue = "";
 
-        if(cursor != null) {
+        Log.e("NOTIFICATION","::" + cursor + "::");
+
+        if(cursor != null && cursor.getCount() > 0) {
+
             if (cursor.moveToFirst()) {
                 contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
                 contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
-                //Log.e("PHONE",contactId);
 
                 phoneValue = phoneNumber;
 
