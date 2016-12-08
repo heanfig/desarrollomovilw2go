@@ -111,7 +111,9 @@ public class NoteDetail extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"No se pudo abrir la nota",Toast.LENGTH_LONG).show();
                 break;
             case R.id.deletenote:
-                Toast.makeText(getApplicationContext(),"No se pudo borrar la nota",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),selectid + "=> selectid",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),selectpos + "=> selectpos",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"No se pudo borrar la nota",Toast.LENGTH_LONG).show();
         }
         return super.onContextItemSelected(item);
     }
