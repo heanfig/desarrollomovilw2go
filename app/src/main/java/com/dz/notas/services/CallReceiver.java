@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dz.notas.AddContactItem;
@@ -41,6 +42,8 @@ import com.dz.notas.models.Contact;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import android.view.ViewGroup.LayoutParams;
 
 /**
  * Created by herman on 4/11/2016.
@@ -104,8 +107,8 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         params.x = 0;
         params.y = 0;
 
-        params.height = 400;
-        params.width = 300;
+        params.height = 500;
+        params.width = 400;
 
         params.format = PixelFormat.TRANSLUCENT;
         final Context ct = c;
@@ -118,7 +121,10 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         ListView messagesContainer = (ListView) myview.findViewById(R.id.messagesContainer);
 
         final Contact n = getContactName(number, mContext);
-        String title = n.getName() == "EMPTY" ? "Agrega este número a contactos" : n.getName();
+        String title = n.getName() == "EMPTY" ? "Agrégalo" : n.getName();
+
+        TextView textViewuser = (TextView)myview.findViewById(R.id.meLbl);
+        textViewuser.setText(title);
 
         ArrayList<String> datos = new ArrayList<String>();
 
@@ -137,6 +143,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         }
 
         ArrayAdapter<String> chatHistory = new ArrayAdapter<String>(c,R.layout.simple_list_item_1,datos);
+
         messagesContainer.setAdapter(chatHistory);
 
         Button btn_send = (Button)myview.findViewById(R.id.chatclosepopup);
@@ -155,6 +162,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
                 Intent intent = null;
                 if(n.getName() == "EMPTY") {
                     intent = new Intent(mContext, AddContactItem.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }else{
                     intent = new Intent(mContext, NoteDetail.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

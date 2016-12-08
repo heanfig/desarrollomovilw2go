@@ -2,8 +2,12 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:text="dasdasdasdasd"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
     android:textSize="10sp"
     android:padding="5dp"
+    android:layout_marginTop="-5dp"
+    android:layout_marginBottom="-5dp"
+    android:includeFontPadding="false"
     android:minHeight="?android:attr/listPreferredItemHeightSmall" />
