@@ -78,9 +78,6 @@ public class NoteDetail extends AppCompatActivity {
         c.setID(value_id);
         c.setPhone(value_phone);
         c.setName(value_name);
-
-        Log.e("PHONE", value_id);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,8 +108,21 @@ public class NoteDetail extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"No se pudo abrir la nota",Toast.LENGTH_LONG).show();
                 break;
             case R.id.deletenote:
-                Toast.makeText(getApplicationContext(),selectid + "=> selectid",Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),selectpos + "=> selectpos",Toast.LENGTH_LONG).show();
+
+                ChatMessage chat_message = (ChatMessage)adapter.getItem(selectpos);
+
+                ConnectionDB db = new ConnectionDB(getApplicationContext());
+                boolean status = db.removeSingleNote(chat_message.getId());
+
+                if(status){
+                    Toast.makeText(getApplicationContext(),"Se eliminó la nota",Toast.LENGTH_LONG).show();
+                    adapter.removeItem(selectpos);
+                }else{
+                    Toast.makeText(getApplicationContext(),"No se pudo eliminar la nota",Toast.LENGTH_LONG).show();
+                }
+
+                //Toast.makeText(getApplicationContext(),chat_message.getId() + "=> selectid",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),selectpos + "=> selectpos",Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(),"No se pudo borrar la nota",Toast.LENGTH_LONG).show();
         }
         return super.onContextItemSelected(item);
@@ -162,14 +172,14 @@ public class NoteDetail extends AppCompatActivity {
                 String phonename = c.getName();
 
                 ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setId(122);//dummy
                 chatMessage.setMessage(messageText);
                 chatMessage.setDate(datetime);
                 chatMessage.setMe(true);
 
                 ConnectionDB db = new ConnectionDB(getApplicationContext());
-                db.addNote("Notas de " + phonename, messageText, contact_id, datetime);
-
+                long id = db.addNote("Notas de " + phonename, messageText, contact_id, datetime);
+                chatMessage.setId(id);
+                //Toast.makeText(getApplicationContext(),"ID" + id,Toast.LENGTH_LONG).show();
                 messageET.setText("");
 
                 displayMessage(chatMessage);

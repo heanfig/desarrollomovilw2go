@@ -45,6 +45,16 @@ public class ChatAdapter extends BaseAdapter {
         }
     }
 
+    public ChatMessage removeItem(int position){
+        if (chatMessages != null) {
+            ChatMessage m = chatMessages.remove(position);
+            notifyDataSetChanged();
+            return m;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public long getItemId(int position) {
         return position;

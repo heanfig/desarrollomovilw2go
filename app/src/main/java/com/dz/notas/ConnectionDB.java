@@ -46,7 +46,20 @@ public class ConnectionDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE);
     }
 
-    public void addNote(String title, String content, String noteid, String datefull){
+    @Deprecated
+    public void removeSingleNote_FIX(String id_contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE + " WHERE " + TABLE_ID + "= " + id_contact);
+        db.close();
+    }
+
+    public boolean removeSingleNote(long id) {
+        String where = TABLE_ID + "=" + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE, where, null) != 0;
+    }
+
+    public long addNote(String title, String content, String noteid, String datefull){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TITLE,title);
@@ -54,13 +67,16 @@ public class ConnectionDB extends SQLiteOpenHelper {
         values.put(CONTACT_ID, noteid);
         values.put(DATETIME, datefull);
         long affectedrows = db.insert(TABLE, null, values);
-        //Log.e("HERMAN",affectedrows+"");
-        if(affectedrows > 0){
-            Toast.makeText(contextap,"Inserto",Toast.LENGTH_LONG).show();
-        }else{
-            Log.e("HERMAN",affectedrows+"");
-        }
         db.close();
+
+        if(affectedrows > 0){
+            Toast.makeText(contextap,"Se inserto la Nota",Toast.LENGTH_LONG).show();
+            return affectedrows;
+        }else{
+            Toast.makeText(contextap,"No se pudo insertar la nota",Toast.LENGTH_LONG).show();
+            return -1;
+        }
+
     }
 
     public Cursor getNotes(String idnote){
