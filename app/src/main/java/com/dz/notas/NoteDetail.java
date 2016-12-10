@@ -1,8 +1,10 @@
 package com.dz.notas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -100,19 +102,53 @@ public class NoteDetail extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 
-        long selectid = menuinfo.id;
-        int selectpos = menuinfo.position;
+        final long selectid = menuinfo.id;
+        final int selectpos = menuinfo.position;
 
         switch (item.getItemId()) {
             case R.id.editnote:
-                Toast.makeText(getApplicationContext(),"No se pudo abrir la nota",Toast.LENGTH_LONG).show();
+
+                ChatMessage chat_message = (ChatMessage)adapter.getItem(selectpos);
+                final EditText txtUrl = new EditText(this);
+                txtUrl.setText(chat_message.getMessage());
+
+                txtUrl.setHint("Ejm. Comprar Queso todos los dias");
+                new AlertDialog.Builder(this)
+                        .setTitle("Editar Nota")
+                        .setMessage("Escriba el nuevo Texto a editar:")
+                        .setView(txtUrl)
+                        .setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                String text = txtUrl.getText().toString();
+
+                                ChatMessage chat_message = (ChatMessage)adapter.getItem(selectpos);
+
+                                if(TextUtils.isEmpty(text)){
+                                    Toast.makeText(getApplicationContext(),"No debe de estar Vacia",Toast.LENGTH_LONG).show();
+                                }else{
+                                    ConnectionDB db = new ConnectionDB(getApplicationContext());
+                                    long status = db.UpdateNote(chat_message.getId(),text);
+                                    if(status > 0){
+                                        Toast.makeText(getApplicationContext(),"Actualizado",Toast.LENGTH_SHORT).show();
+                                        adapter.EditItemText(text,selectpos);
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"No se pudo Editar",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        })
+                        .show();
                 break;
             case R.id.deletenote:
 
-                ChatMessage chat_message = (ChatMessage)adapter.getItem(selectpos);
+                ChatMessage _chat_message = (ChatMessage)adapter.getItem(selectpos);
 
                 ConnectionDB db = new ConnectionDB(getApplicationContext());
-                boolean status = db.removeSingleNote(chat_message.getId());
+                boolean status = db.removeSingleNote(_chat_message.getId());
 
                 if(status){
                     Toast.makeText(getApplicationContext(),"Se eliminó la nota",Toast.LENGTH_LONG).show();
@@ -120,10 +156,6 @@ public class NoteDetail extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"No se pudo eliminar la nota",Toast.LENGTH_LONG).show();
                 }
-
-                //Toast.makeText(getApplicationContext(),chat_message.getId() + "=> selectid",Toast.LENGTH_LONG).show();
-                //Toast.makeText(getApplicationContext(),selectpos + "=> selectpos",Toast.LENGTH_LONG).show();
-                //Toast.makeText(getApplicationContext(),"No se pudo borrar la nota",Toast.LENGTH_LONG).show();
         }
         return super.onContextItemSelected(item);
     }

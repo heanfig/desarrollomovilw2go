@@ -90,6 +90,12 @@ public class ChatAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void EditItemText(String text, int position){
+        ChatMessage ch = chatMessages.get(position);
+        ch.setMessage(text);
+        notifyDataSetChanged();
+    }
+
     public void add(ChatMessage message) {
         chatMessages.add(message);
     }

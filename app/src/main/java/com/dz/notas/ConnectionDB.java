@@ -59,6 +59,14 @@ public class ConnectionDB extends SQLiteOpenHelper {
         return db.delete(TABLE, where, null) != 0;
     }
 
+    public long UpdateNote(long id, String TEXT) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CONTENT, TEXT);
+        long status = db.update(TABLE,cv,TABLE_ID + "=" + id, null);
+        return status;
+    }
+
     public long addNote(String title, String content, String noteid, String datefull){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
