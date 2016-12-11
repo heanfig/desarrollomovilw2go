@@ -77,7 +77,8 @@
         <activity
             android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".NoteDetail" />
+        <activity android:name=".NoteDetail"
+            android:launchMode="singleInstance" />
         <activity android:name=".ListContacts">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

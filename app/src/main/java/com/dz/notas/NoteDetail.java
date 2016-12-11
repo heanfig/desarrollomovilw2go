@@ -38,6 +38,67 @@ public class NoteDetail extends AppCompatActivity {
     private Contact c;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //Toast.makeText(getApplicationContext(),"onResume",Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_note_detail);
+
+        Bundle extras = getIntent().getExtras();
+
+        String value_id = "";
+        String value_phone = "";
+        String value_name = "";
+
+        if (extras != null) {
+            value_id = extras.getString("contact_id");
+            value_phone = extras.getString("value_phone");
+            value_name = extras.getString("value_name");
+        }
+
+        c = new Contact();
+        c.setID(value_id);
+        c.setPhone(value_phone);
+        c.setName(value_name);
+
+        Log.e("PHONE", value_id);
+
+        //Toast.makeText(getApplicationContext(),"value_id=" + value_id, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"value_phone=" +value_phone, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"value_name=" + value_name, Toast.LENGTH_LONG).show();
+
+        initControls();
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(getApplicationContext(),"onResume",Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_note_detail);
+
+        Bundle extras = getIntent().getExtras();
+
+        String value_id = "";
+        String value_phone = "";
+        String value_name = "";
+
+        if (extras != null) {
+            value_id = extras.getString("contact_id");
+            value_phone = extras.getString("value_phone");
+            value_name = extras.getString("value_name");
+        }
+
+        c = new Contact();
+        c.setID(value_id);
+        c.setPhone(value_phone);
+        c.setName(value_name);
+
+        Log.e("PHONE",value_id);
+
+        initControls();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
@@ -66,20 +127,12 @@ public class NoteDetail extends AppCompatActivity {
 
     @Override
     public void onNewIntent(Intent intent){
-        Bundle extras = intent.getExtras();
-        String value_id = "";
-        String value_phone = "";
-        String value_name = "";
-        if (extras != null) {
-            value_id = extras.getString("contact_id");
-            value_phone = extras.getString("value_phone");
-            value_name = extras.getString("value_name");
-        }
-
-        c = new Contact();
-        c.setID(value_id);
-        c.setPhone(value_phone);
-        c.setName(value_name);
+        Intent i = getIntent();
+        i.replaceExtras(new Bundle());
+        i.setAction("");
+        i.setData(null);
+        i.setFlags(0);
+        setIntent(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

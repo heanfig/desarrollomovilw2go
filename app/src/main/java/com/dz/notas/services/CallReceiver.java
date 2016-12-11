@@ -11,11 +11,13 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -95,6 +97,10 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
 
         final WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
 
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 AbsListView.LayoutParams.WRAP_CONTENT,
                 AbsListView.LayoutParams.WRAP_CONTENT,
@@ -108,7 +114,9 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
         params.y = 0;
 
         params.height = 500;
-        params.width = 400;
+        params.width = width - 60;
+
+        //Toast.makeText(c,"w"+width,Toast.LENGTH_SHORT).show();
 
         params.format = PixelFormat.TRANSLUCENT;
         final Context ct = c;
@@ -162,12 +170,23 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
                 Intent intent = null;
                 if(n.getName() == "EMPTY") {
                     intent = new Intent(mContext, AddContactItem.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 }else{
-                    intent = new Intent(mContext, NoteDetail.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("contact_id",n.getID());
-                        intent.putExtra("value_phone",n.getPhone());
+                        intent = new Intent(mContext, NoteDetail.class);
+
+                        Log.e("IMPORTANTE", "contact_id" + n.getID());
+                        Log.e("IMPORTANTE", "value_phone" + n.getPhone());
+                        Log.e("IMPORTANTE", "value_name" + n.getName());
+
+                        if(intent.getExtras() != null){
+                            Log.e("IMPORTANTE","SI HAY EXTRAS");
+                        }else{
+                            Log.e("IMPORTANTE","NO HAY EXTRAS");
+                        }
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                        intent.putExtra("contact_id", n.getID());
+                        intent.putExtra("value_phone", n.getPhone());
                         intent.putExtra("value_name", n.getName());
                 }
                 mContext.startActivity(intent);

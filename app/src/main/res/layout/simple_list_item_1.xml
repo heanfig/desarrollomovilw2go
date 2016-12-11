@@ -5,7 +5,7 @@
     android:text="dasdasdasdasd"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
-    android:textSize="10sp"
+    android:textSize="16sp"
     android:padding="5dp"
     android:layout_marginTop="-5dp"
     android:layout_marginBottom="-5dp"
