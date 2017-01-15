@@ -2,10 +2,15 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header
+    <!--<header
         android:fragment="com.dz.notas.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
-        android:title="@string/pref_header_general" />
+        android:title="@string/pref_header_general" />-->
+
+    <header
+        android:id="@+id/closession"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/closesesionactivity" />
 
     <!--<header
         android:fragment="SettingsActivity$NotificationPreferenceFragment"

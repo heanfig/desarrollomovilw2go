@@ -195,6 +195,7 @@
     <string name="view_all">Ver Todos</string>
     <string name="empty_chat_message">Vaciar Notas</string>
     <string name="action_search">Buscar Contacto</string>
+    <string name="closesesionactivity">Cerrar Sesión </string>
 
     <string name="slide_0_title">¿Necesitas Agregar una nota</string>
     <string name="slide_0_subtitle">de tu última llamada.?</string>
