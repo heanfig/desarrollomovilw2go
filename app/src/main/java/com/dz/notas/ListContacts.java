@@ -154,6 +154,7 @@ public class ListContacts extends AppCompatActivity {
                 Contact c = new Contact();
                 output = new StringBuffer();
                 // Update the progress message
+
                 updateBarHandler.post(new Runnable() {
                     public void run() {
                         pDialog.setMessage("Leyendo Contactos : "+ counter++ +"/"+cursor.getCount());
