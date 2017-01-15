@@ -225,7 +225,7 @@ public class NoteDetail extends AppCompatActivity {
             Intent t = new Intent(getApplicationContext(),SettingsActivity.class);
             startActivity(t);
         }else if(id == R.id.empty_chat){
-            Toast.makeText(getApplicationContext(),"Vaciar Chat",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Vaciar Notas",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
