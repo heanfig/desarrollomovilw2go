@@ -45,6 +45,16 @@ public class ChatAdapter extends BaseAdapter {
         }
     }
 
+    public boolean emptyAllChat(){
+        if (chatMessages != null) {
+            this.chatMessages.clear();
+            notifyDataSetChanged();
+            return true;
+        }else{
+            return true;
+        }
+    }
+
     public ChatMessage removeItem(int position){
         if (chatMessages != null) {
             ChatMessage m = chatMessages.remove(position);

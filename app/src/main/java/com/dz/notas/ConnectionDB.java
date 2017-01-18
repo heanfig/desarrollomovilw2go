@@ -59,6 +59,12 @@ public class ConnectionDB extends SQLiteOpenHelper {
         return db.delete(TABLE, where, null) != 0;
     }
 
+    public boolean removeAllNotesFromContact(long contact_id){
+        String where = CONTACT_ID + "=" + contact_id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE, where, null) != 0;
+    }
+
     public long UpdateNote(long id, String TEXT) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();

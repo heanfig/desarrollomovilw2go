@@ -225,7 +225,37 @@ public class NoteDetail extends AppCompatActivity {
             Intent t = new Intent(getApplicationContext(),SettingsActivity.class);
             startActivity(t);
         }else if(id == R.id.empty_chat){
-            Toast.makeText(getApplicationContext(),"Vaciar Notas",Toast.LENGTH_LONG).show();
+
+            final long contact_id = Long.parseLong(c.getID());
+
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("VACIAR NOTAS")
+                    .setMessage("¿ Esta seguro de borrar las notas ?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            ConnectionDB db = new ConnectionDB(getApplicationContext());
+                            boolean status = db.removeAllNotesFromContact(contact_id);
+
+                            //@TODO: Validar si el usuario tiene notas
+                            if(status){
+                                Toast.makeText(getApplicationContext(),"Se Vaciaron las notas",Toast.LENGTH_LONG).show();
+                                adapter.emptyAllChat();
+                                adapter.notifyDataSetChanged();
+                                scroll();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"No hay elementos",Toast.LENGTH_LONG).show();
+                            }
+
+                            Toast.makeText(getApplicationContext(),"Vaciar Notas de " + contact_id,Toast.LENGTH_LONG).show();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);
