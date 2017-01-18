@@ -232,7 +232,7 @@ public class NoteDetail extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("VACIAR NOTAS")
                     .setMessage("¿ Esta seguro de borrar las notas ?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
