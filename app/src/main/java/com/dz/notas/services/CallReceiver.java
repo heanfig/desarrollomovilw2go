@@ -59,8 +59,17 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     protected void onIncomingCallReceived(Context ctx, String number, Date start) {
         mContext = ctx;
         Log.e("PHONE", "inicio llamada");
-        addInvitePopup(number,ctx);
+        //addInvitePopup(number,ctx);
         //sendNotification("Recibiste una llamada de " + number,number);
+        final Contact n = getContactName(number, mContext);
+        ConnectionDB db = new ConnectionDB(mContext);
+        Cursor cursor = db.getNotes(n.getID());
+
+        if(cursor.getCount() >0){
+            addInvitePopup(number, ctx);
+        }else{
+            sendNotification("Llamada" + number, number);
+        }
     }
 
     @Override
@@ -76,8 +85,18 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
     @Override
     protected void onOutgoingCallStarted(Context ctx, String number, Date start) {
         mContext = ctx;
-        addInvitePopup(number, ctx);
-        Log.e("PHONE", "inicio llamada");
+
+        final Contact n = getContactName(number, mContext);
+        ConnectionDB db = new ConnectionDB(mContext);
+        Cursor cursor = db.getNotes(n.getID());
+
+        if(cursor.getCount() >0){
+            addInvitePopup(number, ctx);
+        }else{
+            sendNotification("Llamada" + number, number);
+        }
+
+        //Log.e("PHONE", "inicio llamada");
         //sendNotification("Inicio la llamada de " + number, number);
     }
 
@@ -264,6 +283,8 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
                         counter++;
                     } while (cursor.moveToNext());
                 }
+            }else{
+                bufferData = "Agrega Notas a este usuario";
             }
 
             boldUsernameMessage = Html.fromHtml(bufferData);
