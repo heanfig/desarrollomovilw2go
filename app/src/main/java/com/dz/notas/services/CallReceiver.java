@@ -278,7 +278,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
                 if (cursor.moveToFirst()) {
                     do {
                         if(counter <= 4){
-                            bufferData += "<b>" + n.getName() +"</b>: " + cursor.getString(2) + "<br>";
+                            bufferData += "<b>"+(counter==0?n.getName():"*")+"</b>: "+cursor.getString(2)+"<br>";
                         }
                         counter++;
                     } while (cursor.moveToNext());
@@ -317,7 +317,7 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
                     "Agregar", pendingIntent);
         }else{
             notificationBuilder.addAction(R.drawable.ic_notifications_black_24dp,
-                    "Ver Chats", pendingIntent);
+                    "Agregar", pendingIntent);
         }
 
         NotificationManager notificationManager =
