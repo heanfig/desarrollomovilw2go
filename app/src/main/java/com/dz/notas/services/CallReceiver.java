@@ -159,9 +159,13 @@ public class CallReceiver extends OutgoingCallBroadcastReceiver {
             ConnectionDB db = new ConnectionDB(mContext);
             Cursor cursor = db.getNotes(n.getID());
             if (cursor != null && cursor.getCount() > 0) {
+                int contador = 0;
                 if (cursor.moveToFirst()) {
                     do {
-                        datos.add(n.getName()+": "+cursor.getString(2));
+                        //datos.add(n.getName()+": "+cursor.getString(2));
+                        datos.add(contador==0?n.getName()+": " + cursor.getString(2):"• " + cursor.getString(2));
+                        //bufferData += "<b>"+()+"</b>: "+cursor.getString(2)+"<br>";
+                        contador++;
                     } while (cursor.moveToNext());
                 }
             }
